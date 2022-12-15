@@ -18,23 +18,32 @@ const GameBoard = () => {
   }
 
   const checkAvailableCell = (index) => {
-    gameBoard[index] !== "" ? null : drawOnScreen(index);
-  };
-
-  const drawOnScreen = (index) => {
-    if (playingNow) {
-      gameBoard[index] = player1;
-      cellsList[index].textContent = player1;
-      playingNow = !playingNow;
-      console.log(gameBoard);
-      return;
-    } else {
-      gameBoard[index] = player2;
-      cellsList[index].textContent = player2;
-      playingNow = !playingNow;
-      console.log(gameBoard);
+    if (gameBoard[index] !== "") {
       return;
     }
+    const currentPlayer = switchTurn();
+    drawOnScreen(index, currentPlayer);
+  };
+
+  const switchTurn = () => {
+    let player = null;
+    const player1 = "X";
+    const player2 = "O";
+
+    if (playingNow) {
+      player = player1;
+      playingNow = !playingNow;
+      return player;
+    } else {
+      player = player2;
+      playingNow = !playingNow;
+      return player;
+    }
+  };
+
+  const drawOnScreen = (index, whoseTurn) => {
+    gameBoard[index] = whoseTurn;
+    cellsList[index].textContent = gameBoard[index];
   };
 
   startGame();
