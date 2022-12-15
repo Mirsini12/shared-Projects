@@ -1,4 +1,4 @@
-function GameBoard() {
+const GameBoard = () => {
   const cellsList = document.querySelectorAll(".cell");
   let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
@@ -7,30 +7,37 @@ function GameBoard() {
   //true for player1 , otherwise false
   let playingNow = true;
 
-  function getInput() {
-    cellsList.forEach((cell) => cell.addEventListener("click", getCellIndex));
-  }
-  function getCellIndex() {
+  const startGame = () => {
+    cellsList.forEach((cell) =>
+      cell.addEventListener("click", getClickedCellIndex)
+    );
+  };
+  function getClickedCellIndex() {
     const index = this.getAttribute("data-index");
-
-    drawOnScreen(index)
+    checkAvailableCell(index);
   }
 
-  function drawOnScreen(index) {
+  const checkAvailableCell = (index) => {
+    gameBoard[index] !== "" ? null : drawOnScreen(index);
+  };
+
+  const drawOnScreen = (index) => {
     if (playingNow) {
-      gameBoard[index] = player1; 
-      cellsList[index].textContent = player1
+      gameBoard[index] = player1;
+      cellsList[index].textContent = player1;
       playingNow = !playingNow;
-    }
-    else {
+      console.log(gameBoard);
+      return;
+    } else {
       gameBoard[index] = player2;
       cellsList[index].textContent = player2;
       playingNow = !playingNow;
+      console.log(gameBoard);
+      return;
     }
-    console.log(gameBoard);
-  }
+  };
 
-  getInput();
-}
+  startGame();
+};
 
 let x = GameBoard();
