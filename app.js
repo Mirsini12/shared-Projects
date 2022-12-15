@@ -1,9 +1,9 @@
 const GameBoard = () => {
   const cellsList = document.querySelectorAll(".cell");
+  const resetBtn = document.getElementById("resetBtn");
+
   let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
-  const player1 = "X";
-  const player2 = "O";
   //true for player1 , otherwise false
   let playingNow = true;
 
@@ -11,7 +11,9 @@ const GameBoard = () => {
     cellsList.forEach((cell) =>
       cell.addEventListener("click", getClickedCellIndex)
     );
+    resetBtn.addEventListener("click" , resetGame)
   };
+
   function getClickedCellIndex() {
     const index = this.getAttribute("data-index");
     checkAvailableCell(index);
@@ -44,9 +46,17 @@ const GameBoard = () => {
   const drawOnScreen = (index, whoseTurn) => {
     gameBoard[index] = whoseTurn;
     cellsList[index].textContent = gameBoard[index];
+    console.log(gameBoard);
   };
 
+  const resetGame = () => {
+    gameBoard = ["", "", "", "", "", "", "", "", ""];
+    cellsList.forEach((cell) => (cell.textContent = ""));
+    console.log(gameBoard);
+  }
+  
   startGame();
 };
 
 let x = GameBoard();
+
