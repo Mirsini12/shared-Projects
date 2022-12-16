@@ -57,6 +57,7 @@ const GameBoard = () => {
   const resetGame = () => {
     gameBoard = ["", "", "", "", "", "", "", "", ""];
     cellsList.forEach((cell) => (cell.textContent = ""));
+    playingNow = true;
     console.log(gameBoard);
   };
 
@@ -68,7 +69,7 @@ const GameBoard = () => {
     ];
 
     // for (let i = 0 i<gameBoard.length; )
-  }
+  };
 
   startGame();
 };
