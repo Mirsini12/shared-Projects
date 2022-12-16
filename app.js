@@ -33,24 +33,21 @@ const GameBoard = () => {
   };
 
   const switchTurn = () => {
-    let player = null;
     const player1 = "X";
     const player2 = "O";
 
     if (playingNow) {
-      player = player1;
       playingNow = !playingNow;
-      return player;
+      return player1;
     } else {
-      player = player2;
       playingNow = !playingNow;
-      return player;
+      return player2;
     }
   };
 
-  const drawOnScreen = (index) => {
-    gameBoard[index] = index;
-    cellsList[index].textContent = gameBoard[index];
+  const drawOnScreen = (index, playerMark) => {
+    gameBoard[index] = playerMark;
+    cellsList[index].textContent = playerMark;
     console.log(gameBoard);
   };
 
@@ -58,7 +55,6 @@ const GameBoard = () => {
     gameBoard = ["", "", "", "", "", "", "", "", ""];
     cellsList.forEach((cell) => (cell.textContent = ""));
     playingNow = true;
-    console.log(gameBoard);
   };
 
   const checkForWinner = () => {
