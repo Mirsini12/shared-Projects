@@ -11,20 +11,25 @@ const GameBoard = () => {
     cellsList.forEach((cell) =>
       cell.addEventListener("click", getClickedCellIndex)
     );
-    resetBtn.addEventListener("click" , resetGame)
+    resetBtn.addEventListener("click", resetGame);
   };
 
   function getClickedCellIndex() {
     const index = this.getAttribute("data-index");
-    checkAvailableCell(index);
+    const cellAvailable = checkAvailableCell(index);
+
+    if (cellAvailable) {
+      const currentPlayer = switchTurn();
+      drawOnScreen(index, currentPlayer);
+    }
+    return;
   }
 
   const checkAvailableCell = (index) => {
     if (gameBoard[index] !== "") {
-      return;
+      return false;
     }
-    const currentPlayer = switchTurn();
-    drawOnScreen(index, currentPlayer);
+    return true;
   };
 
   const switchTurn = () => {
@@ -43,8 +48,8 @@ const GameBoard = () => {
     }
   };
 
-  const drawOnScreen = (index, whoseTurn) => {
-    gameBoard[index] = whoseTurn;
+  const drawOnScreen = (index) => {
+    gameBoard[index] = index;
     cellsList[index].textContent = gameBoard[index];
     console.log(gameBoard);
   };
@@ -53,10 +58,19 @@ const GameBoard = () => {
     gameBoard = ["", "", "", "", "", "", "", "", ""];
     cellsList.forEach((cell) => (cell.textContent = ""));
     console.log(gameBoard);
+  };
+
+  const checkForWinner = () => {
+    const winCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+    ];
+
+    // for (let i = 0 i<gameBoard.length; )
   }
-  
+
   startGame();
 };
 
 let x = GameBoard();
-
