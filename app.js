@@ -85,7 +85,7 @@ const GameBoard = () => {
         gameBoard[c2] === playerMark &&
         gameBoard[c3] === playerMark
       ) {
-        output.textContent = `The Winner Is : ${playerMark}`;
+        output.textContent = `The Winner Is : ${playerMark} !`;
         gameInProgress = false;
       }
     }
@@ -111,4 +111,4 @@ const GameBoard = () => {
   startGame();
 };
 
-let x = GameBoard();
+GameBoard();
