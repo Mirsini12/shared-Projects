@@ -2,6 +2,7 @@ const GameBoard = () => {
   const cellsList = document.querySelectorAll(".cell");
   const resetBtn = document.getElementById("resetBtn");
   const output = document.getElementById("messageOutput");
+  output.textContent = "Welcome! Player X starts first!";
 
   let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
@@ -23,20 +24,9 @@ const GameBoard = () => {
     if (cellAvailable && gameInProgress) {
       const currentPlayer = switchTurn();
       updateCell(index, currentPlayer);
-      drawMessage(currentPlayer);
-    }
-    if (!cellAvailable && gameInProgress) {
-      console.log("tie");
+      printMessage(currentPlayer);
     }
   }
-
-  const drawMessage = (currentPlayer) => {
-    if (gameInProgress) {
-      currentPlayer === "X"
-        ? (output.textContent = `Playing Now : O `)
-        : (output.textContent = `Playing Now: X `);
-    }
-  };
 
   const checkAvailableCell = (index) => {
     if (gameBoard[index] !== "") {
@@ -63,25 +53,16 @@ const GameBoard = () => {
     cellsList[index].textContent = playerMark;
     console.log(gameBoard);
     checkForWinner(playerMark);
-    checkForDraw()
+    checkForDraw();
   };
 
-  const resetGame = () => {
-    cellsList.forEach((cell) => (cell.textContent = ""));
-    gameBoard = ["", "", "", "", "", "", "", "", ""];
-
-    playingNow = true;
-    gameInProgress = true;
-
-    output.textContent = `The Game Starts with X`;
-  };
-
-  const checkForDraw = () => {
-    if (gameBoard.every(elem => elem !== "") && gameInProgress) {
-      output.textContent = `The Game is Draw!`;
-      gameInProgress = false;
+  const printMessage = (currentPlayer) => {
+    if (gameInProgress) {
+      currentPlayer === "X"
+        ? (output.textContent = `Playing Now : O `)
+        : (output.textContent = `Playing Now: X `);
     }
-  }
+  };
 
   const checkForWinner = (playerMark) => {
     const winCombinations = [
@@ -108,6 +89,23 @@ const GameBoard = () => {
         gameInProgress = false;
       }
     }
+  };
+
+  const checkForDraw = () => {
+    if (gameBoard.every((elem) => elem !== "") && gameInProgress) {
+      output.textContent = `The Game is Draw!`;
+      gameInProgress = false;
+    }
+  };
+
+  const resetGame = () => {
+    cellsList.forEach((cell) => (cell.textContent = ""));
+    gameBoard = ["", "", "", "", "", "", "", "", ""];
+
+    playingNow = true;
+    gameInProgress = true;
+
+    output.textContent = `The Game Starts with X`;
   };
 
   startGame();
