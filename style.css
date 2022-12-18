@@ -6,6 +6,7 @@ h1 {
   margin-left: 750px;
   font-size: 40px;
   color: #b30000fb;
+   opacity: 0.8;
 }
 
 .cell {
@@ -51,23 +52,26 @@ h1 {
 
 #messageOutput {
   color: #b30000fb;
+  background-color: #3dd1e7;
   margin-top: 50px;
-  margin-left: 50px;
-  font-size: 35px;
+  margin-left: 450px;
+  width: 9cm;
+  font-size: 27px;
+  opacity: 0.8;
 }
 
-#resetBtn{
-  background-color: #3DD1E7;
-  border: 0 solid #E5E7EB;
+
+#resetBtn {
+  background-color: #3dd1e7;
+  border: 0 solid #e5e7eb;
   box-sizing: border-box;
   color: #000000;
-
-  font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-family: "Permanent Marker", cursive;
   font-size: 1rem;
   font-weight: 700;
   justify-content: center;
   line-height: 1.75rem;
-  padding: .75rem 1.65rem;
+  padding: 0.75rem 1.65rem;
   position: relative;
   text-align: center;
   text-decoration: none #000000 solid;
@@ -88,7 +92,7 @@ h1 {
 }
 
 #resetBtn:after {
-  content: '';
+  content: "";
   position: absolute;
   border: 1px solid #000000;
   bottom: 4px;
@@ -104,7 +108,14 @@ h1 {
 
 @media (min-width: 768px) {
   #resetBtn {
-    padding: .75rem 3rem;
+    padding: 0.75rem 3rem;
     font-size: 1.25rem;
   }
 }
+
+/* @media (min-width: 768px) {
+  #messageOutput {
+    padding: 0.75rem 3rem;
+    font-size: 1.25rem;
+  }
+} */
