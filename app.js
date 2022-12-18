@@ -1,30 +1,42 @@
 const GameBoard = () => {
   const cellsList = document.querySelectorAll(".cell");
   const resetBtn = document.getElementById("resetBtn");
+  const output = document.getElementById("messageOutput");
 
   let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
   //true for player1 , otherwise false
   let playingNow = true;
+  let gameInProgress = true;
 
   const startGame = () => {
     cellsList.forEach((cell) =>
       cell.addEventListener("click", getClickedCellIndex)
     );
     resetBtn.addEventListener("click", resetGame);
+    
   };
 
   function getClickedCellIndex() {
     const index = this.getAttribute("data-index");
     const cellAvailable = checkAvailableCell(index);
 
-    if (cellAvailable) {
+    if (cellAvailable && gameInProgress) {
       const currentPlayer = switchTurn();
-      drawOnScreen(index, currentPlayer);
-      
+      updateCell(index, currentPlayer);
+      drawMessage(currentPlayer);
     }
-    return;
+    if (!cellAvailable && gameInProgress) {
+      console.log("tie");
+    }
   }
+  const drawMessage = (currentPlayer) => {
+    if (gameInProgress) {
+      currentPlayer === "X"
+        ? (output.textContent = `Playing Now : O `)
+        : (output.textContent = `Playing Now: X `);
+    }
+  };
 
   const checkAvailableCell = (index) => {
     if (gameBoard[index] !== "") {
@@ -46,7 +58,7 @@ const GameBoard = () => {
     }
   };
 
-  const drawOnScreen = (index, playerMark) => {
+  const updateCell = (index, playerMark) => {
     gameBoard[index] = playerMark;
     cellsList[index].textContent = playerMark;
     console.log(gameBoard);
@@ -56,7 +68,10 @@ const GameBoard = () => {
   const resetGame = () => {
     gameBoard = ["", "", "", "", "", "", "", "", ""];
     cellsList.forEach((cell) => (cell.textContent = ""));
+    output.textContent = `The Game Starts with X`;
+    console.log(gameBoard);
     playingNow = true;
+    return;
   };
 
   const checkForWinner = (playerMark) => {
@@ -71,21 +86,20 @@ const GameBoard = () => {
       [2, 4, 6],
     ];
 
-    for (let i = 0; i <winCombinations.length; i++){
-      let c1 = winCombinations[i][0]
+    for (let i = 0; i < winCombinations.length; i++) {
+      let c1 = winCombinations[i][0];
       let c2 = winCombinations[i][1];
       let c3 = winCombinations[i][2];
-
-      if (gameBoard[c1] === playerMark && gameBoard[c2] === playerMark && gameBoard[c3] === playerMark) {
-        console.log("winner is " +playerMark);
+      if (
+        gameBoard[c1] === playerMark &&
+        gameBoard[c2] === playerMark &&
+        gameBoard[c3] === playerMark
+      ) {
+        output.textContent = `The Winner Is : ${playerMark}`;
+        gameInProgress = false;
       }
-
-      // console.log(gameBoard.indexOf(c1));
-      // console.log(c1, c2, c3);
     }
-    
   };
-
   startGame();
 };
 
