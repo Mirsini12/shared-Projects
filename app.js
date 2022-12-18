@@ -14,7 +14,6 @@ const GameBoard = () => {
       cell.addEventListener("click", getClickedCellIndex)
     );
     resetBtn.addEventListener("click", resetGame);
-    
   };
 
   function getClickedCellIndex() {
@@ -66,12 +65,13 @@ const GameBoard = () => {
   };
 
   const resetGame = () => {
-    gameBoard = ["", "", "", "", "", "", "", "", ""];
     cellsList.forEach((cell) => (cell.textContent = ""));
-    output.textContent = `The Game Starts with X`;
-    console.log(gameBoard);
+    gameBoard = ["", "", "", "", "", "", "", "", ""];
+
     playingNow = true;
-    return;
+    gameInProgress = true;
+
+    output.textContent = `The Game Starts with X`;
   };
 
   const checkForWinner = (playerMark) => {
