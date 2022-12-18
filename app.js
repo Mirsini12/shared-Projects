@@ -29,6 +29,7 @@ const GameBoard = () => {
       console.log("tie");
     }
   }
+
   const drawMessage = (currentPlayer) => {
     if (gameInProgress) {
       currentPlayer === "X"
@@ -62,6 +63,7 @@ const GameBoard = () => {
     cellsList[index].textContent = playerMark;
     console.log(gameBoard);
     checkForWinner(playerMark);
+    checkForDraw()
   };
 
   const resetGame = () => {
@@ -73,6 +75,13 @@ const GameBoard = () => {
 
     output.textContent = `The Game Starts with X`;
   };
+
+  const checkForDraw = () => {
+    if (gameBoard.every(elem => elem !== "") && gameInProgress) {
+      output.textContent = `The Game is Draw!`;
+      gameInProgress = false;
+    }
+  }
 
   const checkForWinner = (playerMark) => {
     const winCombinations = [
@@ -100,6 +109,7 @@ const GameBoard = () => {
       }
     }
   };
+
   startGame();
 };
 
