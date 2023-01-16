@@ -2,7 +2,7 @@ const GameBoard = () => {
   const cellsList = document.querySelectorAll(".cell");
   const resetBtn = document.getElementById("resetBtn");
   const output = document.getElementById("messageOutput");
-  output.textContent = "Welcome! Player X starts first!";
+  printMessage("Welcome! Player X starts first!");
 
   let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
@@ -24,7 +24,7 @@ const GameBoard = () => {
       updateBoard(index, currentPlayer);
       checkForWinner(currentPlayer);
       checkForDraw();
-      printMessage(currentPlayer);
+      printCurrentPlayersTurn(currentPlayer);
     }
   }
 
@@ -53,13 +53,17 @@ const GameBoard = () => {
     cellsList[index].textContent = playerMark;
   };
 
-  const printMessage = (currentPlayer) => {
+  const printCurrentPlayersTurn = (currentPlayer) => {
     if (gameInProgress) {
       currentPlayer === "X"
         ? (output.textContent = `Playing Now : O `)
         : (output.textContent = `Playing Now: X `);
     }
   };
+
+  function printMessage(message){
+    output.textContent = message;
+  }
 
   const checkForWinner = (playerMark) => {
     const winCombinations = [
@@ -82,7 +86,7 @@ const GameBoard = () => {
         gameBoard[c2] === playerMark &&
         gameBoard[c3] === playerMark
       ) {
-        output.textContent = `The Winner Is : ${playerMark} !`;
+        printMessage(`The Winner Is : ${playerMark} !`)
         gameInProgress = false;
       }
     }
@@ -90,7 +94,7 @@ const GameBoard = () => {
 
   const checkForDraw = () => {
     if (gameBoard.every((elem) => elem !== "") && gameInProgress) {
-      output.textContent = `The Game is Draw!`;
+      printMessage("The Game is Draw!");
       gameInProgress = false;
     }
   };
@@ -102,7 +106,7 @@ const GameBoard = () => {
     playingNow = true;
     gameInProgress = true;
 
-    output.textContent = `The Game Starts with X`;
+    printMessage("The Game Starts with X");
   };
 
   startGame();
