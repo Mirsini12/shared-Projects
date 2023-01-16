@@ -11,19 +11,19 @@ const GameBoard = () => {
   let gameInProgress = true;
 
   const startGame = () => {
-    cellsList.forEach((cell) =>
-      cell.addEventListener("click", getClickedCellIndex)
-    );
+    cellsList.forEach((cell) => cell.addEventListener("click", onCellClick));
     resetBtn.addEventListener("click", resetGame);
   };
 
-  function getClickedCellIndex() {
+  function onCellClick() {
     const index = this.getAttribute("data-index");
     const cellAvailable = checkAvailableCell(index);
 
     if (cellAvailable && gameInProgress) {
       const currentPlayer = switchTurn();
-      updateCell(index, currentPlayer);
+      updateBoard(index, currentPlayer);
+      checkForWinner(currentPlayer);
+      checkForDraw();
       printMessage(currentPlayer);
     }
   }
@@ -48,12 +48,9 @@ const GameBoard = () => {
     }
   };
 
-  const updateCell = (index, playerMark) => {
+  const updateBoard = (index, playerMark) => {
     gameBoard[index] = playerMark;
     cellsList[index].textContent = playerMark;
-    console.log(gameBoard);
-    checkForWinner(playerMark);
-    checkForDraw();
   };
 
   const printMessage = (currentPlayer) => {
