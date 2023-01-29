@@ -10,10 +10,11 @@ function playAgainstPlayer() {
   selectionWindow.style.display = "none";
   gameWindow.style.display = "block";
   let running = true;
-
-  //id playerText for a p that displays tic tac toe text and win message?
-  const header = document.getElementById("header");
+  
+  const nextPlayer = document.getElementById("nextPlayer");
+  const resultMessage = document.getElementById("resultMessage");
   const restartBtn = document.getElementById("restartBtn");
+
 
   const boxes = document.querySelectorAll(".box");
 
@@ -28,9 +29,9 @@ function playAgainstPlayer() {
     boxes.forEach((box) => box.addEventListener("click", boxClicked));
     restartBtn.addEventListener("click", restart);
 
-    function boxClicked(b) {
+    function boxClicked(box) {
       if (running) {
-        updateBoard(b);
+        updateBoard(box);
         let winner = checkForWinner();
 
         if (winner) {
@@ -43,11 +44,11 @@ function playAgainstPlayer() {
     }
   };
 
-  function updateBoard(b) {
-    const id = b.target.id;
+  function updateBoard(box) {
+    const id = box.target.id;
     if (!gameBoard[id]) {
       gameBoard[id] = currentPlayer;
-      b.target.innerText = currentPlayer;
+      box.target.innerText = currentPlayer;
       tieCounter += 1;
     }
   }
@@ -73,6 +74,7 @@ function playAgainstPlayer() {
       [0, 4, 8],
       [2, 4, 6],
     ];
+
     for (const combo of winningCombinations) {
       let [a, b, c] = combo;
 
@@ -82,6 +84,7 @@ function playAgainstPlayer() {
         gameBoard[a] === gameBoard[c]
       ) {
         running = false;
+        printMessage(`${currentPlayer} won`)
         return [a, b, c];
       }
     }
@@ -90,30 +93,50 @@ function playAgainstPlayer() {
 
   function checkForTie() {
     if (tieCounter === 9) {
-      //   playerText.innerHTML = "It's a tie!!!!";
+      printMessage("It's a tie!!!!");
       return;
     }
   }
 
-  function switchPlayer() {
+  function switchPlayer() {    
+    
+    printNextPlayer();
     if (currentPlayer === letterX) {
       currentPlayer = letterO;
     } else {
       currentPlayer = letterX;
     }
+
+    if(running===false){
+      nextPlayer.innerText= " ";
+    }
+   
   }
 
-  function restart() {
-    running = true;
-    gameBoard.fill(null);
-    boxes.forEach((box) => {
-      box.innerText = " ";
-      box.style.backgroundColor = "";
-    });
-    tieCounter = 0;
-    currentPlayer = letterX;
-    // playerText.innerHTML = "tic tac toe";
+
+  function printNextPlayer() {
+    currentPlayer === letterX ? nextPlayer.innerText = 'Playing now: o' : nextPlayer.innerText = 'Playing now: x'
   }
 
-  startGame();
+
+function printMessage(message) {
+  resultMessage.innerHTML = message;
+}
+function restart() {
+  running = true;
+  gameBoard.fill(null);
+  boxes.forEach((box) => {
+    box.innerText = " ";
+    box.style.backgroundColor = "";
+  });
+  tieCounter = 0;
+  currentPlayer = letterX;
+  printMessage(" ");
+  nextPlayer.innerText='Playing now : x'
+}
+
+
+
+startGame();
+
 }
